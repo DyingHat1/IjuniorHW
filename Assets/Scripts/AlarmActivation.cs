@@ -5,12 +5,12 @@ using UnityEngine.Events;
 
 public class AlarmActivation : MonoBehaviour
 {
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private float _maxVolume;
-    [SerializeField] private float _minVolume;
-    [SerializeField] private float _deltaVolume;
+    [SerializeField] protected AudioSource _audioSource;
+    [SerializeField] protected float _maxVolume;
+    [SerializeField] protected float _minVolume;
+    [SerializeField] protected float _deltaVolume;
 
-    private bool _isThiefInHouse;
+    protected bool _isThiefInHouse;
 
     private void Start()
     {
@@ -19,14 +19,7 @@ public class AlarmActivation : MonoBehaviour
 
     private void Update()
     {
-        if (_isThiefInHouse)
-        {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _maxVolume, _deltaVolume);
-        }
-        else
-        {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _minVolume, _deltaVolume);
-        }
+        ChangeVolume();
 
         if (_audioSource.volume == _minVolume)
             _audioSource.Stop();
@@ -48,4 +41,19 @@ public class AlarmActivation : MonoBehaviour
             _isThiefInHouse = false;
         }
     }
+
+    public float VolumeBound()
+    {
+        if (_isThiefInHouse)
+            return _maxVolume;
+
+        return _minVolume;
+    }
+
+    private void ChangeVolume()
+    {
+        _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, VolumeBound(), _deltaVolume);
+    }
 }
+
+
