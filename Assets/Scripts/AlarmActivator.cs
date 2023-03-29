@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActivateAlarm : MonoBehaviour
+public class AlarmActivator : MonoBehaviour
 {
     private bool _isThiefInHouse;
 

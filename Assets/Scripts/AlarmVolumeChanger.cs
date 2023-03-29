@@ -9,30 +9,34 @@ public class AlarmVolumeChanger : MonoBehaviour
     [SerializeField] private float _maxVolume;
     [SerializeField] private float _minVolume;
     [SerializeField] private float _deltaVolume;
-    [SerializeField] private ActivateAlarm _activateAlarm;
+    [SerializeField] private AlarmActivator _activateAlarm;
+
+    private bool _isCoroutineOn;
+
+    private void Start()
+    {
+        _isCoroutineOn = false;
+        _audioSource.volume = _minVolume;
+    }    
 
     private void Update()
     {
-        if (_audioSource.volume < _maxVolume && _audioSource.volume > _minVolume)
+       if (_isCoroutineOn == false)
         {
-            ChangeVolume(_activateAlarm.IsThiefInHouse());
-        }
-        else
-        {
-            if (_activateAlarm.IsThiefInHouse())
+            if (_audioSource.isPlaying == false)
             {
-                if (_audioSource.isPlaying == false)
+                if (_activateAlarm.IsThiefInHouse())
                 {
                     _audioSource.Play();
-                    ChangeVolume(_activateAlarm.IsThiefInHouse());
+                    StartCoroutine(VolumeChanger());
                 }
             }
             else
             {
-                if (_audioSource.volume == _maxVolume)
-                    ChangeVolume(_activateAlarm.IsThiefInHouse());
-                else
-                    _audioSource.Stop();
+                if (_activateAlarm.IsThiefInHouse() == false)
+                {
+                    StartCoroutine(VolumeChanger());
+                }
             }
         }
     }
@@ -45,9 +49,28 @@ public class AlarmVolumeChanger : MonoBehaviour
     private float VolumeBound(bool isThiefInHouse)
     {
         if (isThiefInHouse)
-            return _maxVolume;
+            return _maxVolume;  
 
         return _minVolume;
+    }
+
+    private IEnumerator VolumeChanger()
+    {
+        _isCoroutineOn = true;
+        ChangeVolume(_activateAlarm.IsThiefInHouse());
+
+        while(_audioSource.volume != _minVolume && _audioSource.volume != _maxVolume)
+        {
+            ChangeVolume(_activateAlarm.IsThiefInHouse());
+            yield return null;
+        }
+        
+        if(_audioSource.volume == _minVolume)
+        {
+            _audioSource.Stop();
+        }
+
+        _isCoroutineOn = false;
     }
 }
 
