@@ -261,7 +261,6 @@ GameObject:
   - component: {fileID: 272931343}
   - component: {fileID: 272931342}
   - component: {fileID: 272931346}
-  - component: {fileID: 272931345}
   - component: {fileID: 272931344}
   m_Layer: 0
   m_Name: Alarm
@@ -353,32 +352,7 @@ MonoBehaviour:
   _maxVolume: 0.6
   _minVolume: 0
   _deltaVolume: 0.01
---- !u!61 &272931345
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 272931341}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -5.8519616, y: -0.81500435}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 12.70584, y: 12.031986}
-  m_EdgeRadius: 0
+  _activateAlarm: {fileID: 1904403975}
 --- !u!82 &272931346
 AudioSource:
   m_ObjectHideFlags: 0
@@ -937,6 +911,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1904403974}
+  - component: {fileID: 1904403976}
+  - component: {fileID: 1904403975}
   m_Layer: 0
   m_Name: House
   m_TagString: House part
@@ -964,6 +940,44 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1904403975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904403973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b11d8d4ef9e7a941930491cecb72318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &1904403976
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904403973}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 5.7941236, y: -1.6796794}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 7.5338, y: 4.3593593}
+  m_EdgeRadius: 0
 --- !u!1 &2059772951
 GameObject:
   m_ObjectHideFlags: 0
