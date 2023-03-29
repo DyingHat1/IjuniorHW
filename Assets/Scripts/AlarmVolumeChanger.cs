@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+
 
 public class AlarmVolumeChanger : MonoBehaviour
 {
@@ -9,36 +9,24 @@ public class AlarmVolumeChanger : MonoBehaviour
     [SerializeField] private float _maxVolume;
     [SerializeField] private float _minVolume;
     [SerializeField] private float _deltaVolume;
-    [SerializeField] private AlarmActivator _activateAlarm;
 
+    private bool _isThiefInHouse = false;
     private bool _isCoroutineOn;
 
-    private void Start()
+    public void ActivateAlarm()
     {
-        _isCoroutineOn = false;
-        _audioSource.volume = _minVolume;
-    }    
+        _isThiefInHouse = true;
 
-    private void Update()
+        if (_audioSource.isPlaying == false)
+            _audioSource.Play();
+
+        StartCoroutine(VolumeChanger(_maxVolume));
+    }
+
+    public void DeactivateAlarm()
     {
-       if (_isCoroutineOn == false)
-        {
-            if (_audioSource.isPlaying == false)
-            {
-                if (_activateAlarm.IsThiefInHouse())
-                {
-                    _audioSource.Play();
-                    StartCoroutine(VolumeChanger());
-                }
-            }
-            else
-            {
-                if (_activateAlarm.IsThiefInHouse() == false)
-                {
-                    StartCoroutine(VolumeChanger());
-                }
-            }
-        }
+        _isThiefInHouse = false;
+        StartCoroutine(VolumeChanger(_minVolume));
     }
 
     private void ChangeVolume(bool isThiefInHouse)
@@ -54,14 +42,16 @@ public class AlarmVolumeChanger : MonoBehaviour
         return _minVolume;
     }
 
-    private IEnumerator VolumeChanger()
+    private IEnumerator VolumeChanger(float directVolume)
     {
-        _isCoroutineOn = true;
-        ChangeVolume(_activateAlarm.IsThiefInHouse());
+        if (_isCoroutineOn)
+            StopAllCoroutines();
+        else
+            _isCoroutineOn = true;
 
-        while(_audioSource.volume != _minVolume && _audioSource.volume != _maxVolume)
+        while(_audioSource.volume != directVolume)
         {
-            ChangeVolume(_activateAlarm.IsThiefInHouse());
+            ChangeVolume(_isThiefInHouse);
             yield return null;
         }
         
